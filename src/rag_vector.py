@@ -24,7 +24,7 @@ DEFAULT_FILE_EXTENSIONS: Set[str] = {
 VECTOR_WEIGHT = 0.7
 KEYWORD_WEIGHT = 0.3
 
-COLLECTION_NAME = "odysseus_rag"
+COLLECTION_NAME = "oju_rag"
 
 
 def _generate_doc_id(text: str) -> str:
@@ -51,6 +51,7 @@ class VectorRAG:
         try:
             from src.chroma_client import get_chroma_client
             from src.embeddings import get_embedding_client
+            from src.legacy_names import get_or_migrate_collection
 
             self._model = get_embedding_client()
             if self._model is None:
@@ -58,8 +59,8 @@ class VectorRAG:
             logger.info(f"Embedding: {self._model.url} model={self._model.model}")
 
             client = get_chroma_client()
-            self._collection = client.get_or_create_collection(
-                name=COLLECTION_NAME,
+            self._collection = get_or_migrate_collection(
+                client, COLLECTION_NAME, "odysseus_rag",
                 metadata={"hnsw:space": "cosine"},
             )
 

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class MemoryVectorStore:
     """Vector index over memory entries for semantic retrieval."""
 
-    COLLECTION_NAME = "odysseus_memories"
+    COLLECTION_NAME = "oju_memories"
 
     def __init__(self, data_dir: str, embedding_model=None):
         self._model = embedding_model
@@ -27,6 +27,7 @@ class MemoryVectorStore:
     def _initialize(self):
         try:
             from src.chroma_client import get_chroma_client
+            from src.legacy_names import get_or_migrate_collection
 
             if self._model is None:
                 from src.embeddings import get_embedding_client
@@ -36,8 +37,8 @@ class MemoryVectorStore:
                 logger.info(f"MemoryVectorStore using embeddings: {self._model.url}")
 
             client = get_chroma_client()
-            self._collection = client.get_or_create_collection(
-                name=self.COLLECTION_NAME,
+            self._collection = get_or_migrate_collection(
+                client, self.COLLECTION_NAME, "odysseus_memories",
                 metadata={"hnsw:space": "cosine"},
             )
 
