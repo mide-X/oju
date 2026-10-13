@@ -1,6 +1,6 @@
 # Roadmap / Help Wanted
 
-Odysseus is on a voyage, but not home yet. It works great for me (lol), but this is ship is moving fast and feedback/help would be appreciated! (I dont know what I'm doing hlep).
+Oju is walking the path Ògún cleared, but hasn't reached the end yet. It works great for me (lol), but it is moving fast and feedback/help would be appreciated! (I dont know what I'm doing hlep).
 
 If you see weird CSS, strange layout behavior, or a suspiciously murky corner of
 the codebase, you are probably right to stay away.
@@ -46,7 +46,7 @@ the codebase, you are probably right to stay away.
 - Provider setup/probing audit for Anthropic, Gemini, Groq, xAI, OpenRouter, OpenAI, and DeepSeek.
 
 ## Refactor Targets
-- CSS cleanup. `static/style.css` basically Calypso's island atm.
+- CSS cleanup. `static/style.css` basically Igbó Irúnmalẹ̀ (the forest of a thousand spirits) atm.
 - Tour core helper. The onboarding tours have too much copy-pasted scaffolding; promote a shared `tour-core.js` helper before adding more tours.
 - Modal/window positioning cleanup. Some window controls have improved, but the
   underlying popup/dropdown/fixed-position behavior is still too fragile.

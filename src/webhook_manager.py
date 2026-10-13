@@ -192,7 +192,7 @@ class WebhookManager:
     async def deliver_test(self, webhook_id: str, url: str, encrypted_secret: Optional[str]):
         """Public method for the test-webhook route."""
         decrypted = self._decrypt_secret(encrypted_secret)
-        await self._deliver(webhook_id, url, decrypted, "webhook.test", {"message": "Test ping from Odysseus"})
+        await self._deliver(webhook_id, url, decrypted, "webhook.test", {"message": "Test ping from Oju"})
 
     async def _deliver(self, webhook_id: str, url: str, secret: Optional[str], event: str, payload: dict):
         """Internal delivery. Never call directly from outside this class (use deliver_test)."""
@@ -206,11 +206,14 @@ class WebhookManager:
         body = json.dumps({"event": event, "timestamp": datetime.utcnow().isoformat(), "data": payload})
         headers = {
             "Content-Type": "application/json",
+            "X-Oju-Event": event,
+            # Pre-rename name, kept so existing receivers keep working.
             "X-Odysseus-Event": event,
-            "User-Agent": "Odysseus-Webhook/1.0",
+            "User-Agent": "Oju-Webhook/1.0",
         }
         if secret:
             sig = hmac.new(secret.encode(), body.encode(), hashlib.sha256).hexdigest()
+            headers["X-Oju-Signature"] = sig
             headers["X-Odysseus-Signature"] = sig
 
         db = SessionLocal()
